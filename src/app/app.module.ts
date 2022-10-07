@@ -10,11 +10,13 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TotalBillComponent } from './total-bill/total-bill.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FriendsComponent
+    FriendsComponent,
+    TotalBillComponent
   ],
   imports: [
     BrowserModule,

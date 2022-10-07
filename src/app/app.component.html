@@ -1,1 +1,6 @@
-<app-friends></app-friends>
+<app-total-bill></app-total-bill>
+
+
+<button mat-mini-fab color="primary" class="float" [disabled]="!(stateService.completedStep$ | async)">
+  <mat-icon fontIcon="arrow_forward"></mat-icon>
+</button>
