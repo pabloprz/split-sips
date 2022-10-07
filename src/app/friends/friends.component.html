@@ -1,0 +1,28 @@
+<div class="totals">
+  <mat-form-field class="full-width" appearance="fill">
+    <mat-label>Total bill</mat-label>
+    <input matInput type="number" min="0" autocomplete="off"
+           [(ngModel)]="total">
+  </mat-form-field>
+</div>
+
+<button mat-fab color="primary">
+  <mat-icon fontIcon="add" (click)="addFriend()"></mat-icon>
+</button>
+
+<div class="row" *ngFor="let friend of friends">
+  <mat-form-field class="col-5" appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="friend.name">
+  </mat-form-field>
+
+  <mat-form-field class="col-3" appearance="fill">
+    <mat-label>Total spent</mat-label>
+    <input matInput type="number" min="0" autocomplete="off"
+           [(ngModel)]="friend.spent">
+  </mat-form-field>
+
+  <button mat-mini-fab color="danger">
+    <mat-icon fontIcon="remove_circle" (click)="removeFriend(friend)"></mat-icon>
+  </button>
+</div>
