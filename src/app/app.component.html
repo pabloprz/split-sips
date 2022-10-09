@@ -1,6 +1,26 @@
+<mat-horizontal-stepper (selectionChange)="selectionChanged($event)"
+                        [linear]="true" #stepper>
+    <mat-step [completed]="stepsState?.step1Completed"></mat-step>
+    <mat-step [completed]="stepsState?.step2Completed"></mat-step>
+    <mat-step [completed]="stepsState?.step3Completed"></mat-step>
+    <mat-step [completed]="stepsState?.step4Completed"></mat-step>
+
+    <!--  <mat-step *ngFor="let step of steps; let i = index" [label]="step.title">-->
+    <!--    <div *ngIf="loadingStep">-->
+    <!--      <mat-spinner></mat-spinner>-->
+    <!--    </div>-->
+    <!--    <div *ngIf="!loadingStep">-->
+    <!--      <router-outlet *ngIf="i === selectedStepIndex"></router-outlet>-->
+    <!--    </div>-->
+    <!--  </mat-step>-->
+</mat-horizontal-stepper>
+
+{{stepsState | json}}
+
+
 <app-total-bill></app-total-bill>
 
-
-<button mat-mini-fab color="primary" class="float" [disabled]="!(stateService.completedStep$ | async)">
-  <mat-icon fontIcon="arrow_forward"></mat-icon>
+<button mat-mini-fab color="primary" class="float" (click)="next(stepper)"
+        [disabled]="!stepsState?.currentStepValid">
+    <mat-icon fontIcon="arrow_forward"></mat-icon>
 </button>

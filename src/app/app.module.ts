@@ -9,25 +9,27 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TotalBillComponent } from './total-bill/total-bill.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {TotalBillComponent} from './total-bill/total-bill.component';
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FriendsComponent,
-    TotalBillComponent
-  ],
-  imports: [
-    BrowserModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    NgbModule
-  ],
+    declarations: [
+        AppComponent,
+        FriendsComponent,
+        TotalBillComponent
+    ],
+    imports: [
+        BrowserModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        NgbModule,
+        MatStepperModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
