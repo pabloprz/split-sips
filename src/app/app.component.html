@@ -15,10 +15,8 @@
     <!--  </mat-step>-->
 </mat-horizontal-stepper>
 
-{{stepsState | json}}
 
-
-<app-total-bill></app-total-bill>
+<app-friends></app-friends>
 
 <button mat-mini-fab color="primary" class="float" (click)="next(stepper)"
         [disabled]="!stepsState?.currentStepValid">

@@ -1,20 +1,34 @@
-<button mat-fab color="primary">
-  <mat-icon fontIcon="add" (click)="addFriend()"></mat-icon>
-</button>
+<div class="text-center mb-4 row">
+    <div class="col-4"></div>
+    <div class="my-auto col-4 text-center">
+        <h3 class="mb-0">Friends</h3>
+    </div>
+    <div class="col-4">
+        <button mat-mini-fab color="primary" class="mat-elevation-z0">
+            <mat-icon fontIcon="add" (click)="addFriend()"></mat-icon>
+        </button>
+    </div>
 
-<div class="row" *ngFor="let friend of friends">
-  <mat-form-field class="col-5" appearance="fill">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="friend.name">
-  </mat-form-field>
+</div>
 
-  <mat-form-field class="col-3" appearance="fill">
-    <mat-label>Total spent</mat-label>
-    <input matInput type="number" min="0" autocomplete="off"
-           [(ngModel)]="friend.spent">
-  </mat-form-field>
+<div class="friends-container">
+    <div class="row align-items-center justify-content-center"
+         *ngFor="let friend of friends">
+        <div class="col-2 text-center">
+            <app-circle-initials [name]="friend.name"></app-circle-initials>
+        </div>
+        <div class="col-8 friend-container">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput [(ngModel)]="friend.name"
+                       (ngModelChange)="friendChanged()"
+                       autocomplete="off">
+            </mat-form-field>
+        </div>
 
-  <button mat-mini-fab color="danger">
-    <mat-icon fontIcon="remove_circle" (click)="removeFriend(friend)"></mat-icon>
-  </button>
+        <div class="col-2">
+            <mat-icon fontIcon="delete" color="warn"
+                      (click)="removeFriend(friend)"></mat-icon>
+        </div>
+    </div>
 </div>

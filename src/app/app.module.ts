@@ -12,12 +12,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TotalBillComponent} from './total-bill/total-bill.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import {
+    CircleInitialsComponent
+} from './friends/circle-initials/circle-initials.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         FriendsComponent,
-        TotalBillComponent
+        TotalBillComponent,
+        CircleInitialsComponent
     ],
     imports: [
         BrowserModule,
@@ -30,8 +34,8 @@ import {MatStepperModule} from "@angular/material/stepper";
         NgbModule,
         MatStepperModule
     ],
-  providers: [],
-  bootstrap: [AppComponent]
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }
