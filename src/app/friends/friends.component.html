@@ -1,15 +1,5 @@
-<div class="text-center mb-4 row">
-    <div class="col-4"></div>
-    <div class="my-auto col-4 text-center">
-        <h3 class="mb-0">Friends</h3>
-    </div>
-    <div class="col-4">
-        <button mat-mini-fab color="primary" class="mat-elevation-z0">
-            <mat-icon fontIcon="add" (click)="addFriend()"></mat-icon>
-        </button>
-    </div>
-
-</div>
+<app-title-with-add title="Friends"
+                    (addClicked)="addFriend()"></app-title-with-add>
 
 <div class="friends-container">
     <div class="row align-items-center justify-content-center"

@@ -14,16 +14,20 @@ import {TotalBillComponent} from './total-bill/total-bill.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {
     CircleInitialsComponent
-} from './friends/circle-initials/circle-initials.component';
+} from './util/circle-initials/circle-initials.component';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from "@angular/router";
+import {
+    TitleWithAddComponent
+} from './util/title-with-add/title-with-add.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         FriendsComponent,
         TotalBillComponent,
-        CircleInitialsComponent
+        CircleInitialsComponent,
+        TitleWithAddComponent
     ],
     imports: [
         BrowserModule,
