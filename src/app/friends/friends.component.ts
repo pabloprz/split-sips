@@ -1,11 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
-
-export interface Friend {
-    id: number;
-    name: string;
-    spent: number;
-}
+import {Friend} from "../util/friend";
+import {StepRoutingService} from "../util/step-routing.service";
 
 @Component({
     selector: 'app-friends',
@@ -18,12 +14,15 @@ export class FriendsComponent implements OnInit {
     friends: Friend[] = [];
 
     constructor(
-        private stateService: StateService
+        private stateService: StateService,
+        private stepRoutingService: StepRoutingService
     ) {
     }
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
+        this.stepRoutingService.nextAction$.subscribe(() =>
+            this.stateService.state.friends?.push(...this.friends));
     }
 
     addFriend() {

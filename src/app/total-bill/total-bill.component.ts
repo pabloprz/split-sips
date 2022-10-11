@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
-import {Router} from "@angular/router";
+import {StepRoutingService} from "../util/step-routing.service";
 
 @Component({
     selector: 'app-total-bill',
@@ -13,18 +13,16 @@ export class TotalBillComponent implements OnInit {
 
     constructor(
         private stateService: StateService,
-        private router: Router
+        private stepRoutingService: StepRoutingService
     ) {
     }
 
     ngOnInit(): void {
+        this.stepRoutingService.nextAction$.subscribe(() => this.updateState());
     }
 
     onNext() {
-        this.stateService.state.total = this.total;
-        this.router.navigate(['/step2']).then(() => {
-            console.log('Navigation successful')
-        });
+        this.stepRoutingService.next();
     }
 
     totalChanged() {
@@ -35,9 +33,13 @@ export class TotalBillComponent implements OnInit {
         }
     }
 
-    hey() {
+    enterPressed() {
         if (this.total != null) {
             this.onNext();
         }
+    }
+
+    updateState() {
+        this.stateService.state.total = this.total;
     }
 }

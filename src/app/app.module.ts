@@ -20,6 +20,7 @@ import {RouterModule} from "@angular/router";
 import {
     TitleWithAddComponent
 } from './util/title-with-add/title-with-add.component';
+import {ExpensesComponent} from './expenses/expenses.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import {
         FriendsComponent,
         TotalBillComponent,
         CircleInitialsComponent,
-        TitleWithAddComponent
+        TitleWithAddComponent,
+        ExpensesComponent
     ],
     imports: [
         BrowserModule,

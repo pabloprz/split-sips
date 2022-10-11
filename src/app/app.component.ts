@@ -1,22 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StateService, StepState} from "./util/state.service";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {MatStepper} from "@angular/material/stepper";
 import {NavigationEnd, Router} from "@angular/router";
 import {filter, first} from "rxjs";
+import {StepRoutingService} from "./util/step-routing.service";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('stepper') stepper!: MatStepper;
+
     nextSelected = false;
     title = 'split-sips';
     stepsState?: StepState;
 
     constructor(
-        public stateService: StateService,
+        private stepRoutingService: StepRoutingService,
+        private stateService: StateService,
         private router: Router
     ) {
     }
@@ -28,19 +33,23 @@ export class AppComponent implements OnInit {
         this.checkLandingRoute();
     }
 
+    ngAfterViewInit(): void {
+        this.stepRoutingService.initialize(this.stepper);
+    }
+
     selectionChanged($event: StepperSelectionEvent) {
         if (!this.nextSelected) {
-            this.stateService.moveTo($event.selectedIndex);
+            this.stateService.moveTo($event.selectedIndex + 1);
         }
+        this.nextSelected = false;
+
+        console.log(this.stateService.state)
         this.router.navigate(['/step' + this.stateService.steps.currentStep]);
     }
 
-    next(stepper: MatStepper) {
-        this.stateService.jumpStep();
+    next() {
         this.nextSelected = true;
-        setTimeout(() => {
-            stepper.next()
-        }, 0)
+        this.stepRoutingService.next();
     }
 
     checkLandingRoute() {
