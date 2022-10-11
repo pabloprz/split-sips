@@ -1,0 +1,14 @@
+.expenses-container {
+    height: calc(100% - 40px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.subtotal {
+    color: gray;
+    font-size: 13px;
+}
+
+:host::ng-deep .title-row {
+    margin-bottom: 0 !important;
+}

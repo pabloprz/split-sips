@@ -1,6 +1,6 @@
 export interface Expense {
     id: number,
     concept: string,
-    amount: number,
+    amount?: number,
     friends: number[]
 }

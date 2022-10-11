@@ -1,0 +1,33 @@
+<app-title-with-add title="Expenses"
+                    (addClicked)="newExpense()"></app-title-with-add>
+
+<div class="text-center mb-4">
+    <span class="subtotal">(Subtotal: ${{subtotal}})</span>
+</div>
+
+<div class="expenses-container">
+    <div class="row align-items-center justify-content-center"
+         *ngFor="let exp of expenses">
+        <div class="col-5">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Concept</mat-label>
+                <input type="text" matInput [(ngModel)]="exp.concept"
+                       (ngModelChange)="expenseChanged()"
+                       autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-5 friend-container">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Amount</mat-label>
+                <input type="number" matInput [(ngModel)]="exp.amount"
+                       (ngModelChange)="expenseChanged()"
+                       autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-1">
+            <mat-icon fontIcon="delete" color="warn"
+                      (click)="removeExpense(exp)"></mat-icon>
+        </div>
+    </div>
+</div>
