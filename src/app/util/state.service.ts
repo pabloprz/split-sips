@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {Friend} from "./friend";
+import {Expense} from "./expense";
 
 export interface State {
     total?: number;
     friends?: Friend[];
+    expenses: Expense[];
 }
 
 export interface StepState {
@@ -39,7 +41,7 @@ export class StateService {
     }
 
     initialize() {
-        this.state = {friends: []};
+        this.state = {friends: [], expenses: []};
         this.stepState$.subscribe(steps => this.steps = steps);
         this.stepState.next({...this.steps});
     }

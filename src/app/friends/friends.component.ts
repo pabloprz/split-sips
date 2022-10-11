@@ -25,12 +25,7 @@ export class FriendsComponent implements OnInit {
         this.stateService.invalidateStep();
         this.subs.add(
             this.stepRoutingService.nextAction$
-                .subscribe(() => {
-                    this.friends.forEach(f => {
-                        console.log(f, this.stateService.state.friends)
-                        this.stateService.state.friends?.push(f)
-                    });
-                })
+                .subscribe(() => this.stateService.state.friends?.push(...this.friends))
         );
     }
 
