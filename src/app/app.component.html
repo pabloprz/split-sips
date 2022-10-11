@@ -1,9 +1,21 @@
 <mat-horizontal-stepper (selectionChange)="selectionChanged($event)"
                         [linear]="true" #stepper>
-    <mat-step [completed]="stepsState?.step1Completed"></mat-step>
-    <mat-step [completed]="stepsState?.step2Completed"></mat-step>
-    <mat-step [completed]="stepsState?.step3Completed"></mat-step>
-    <mat-step [completed]="stepsState?.step4Completed"></mat-step>
+    <mat-step [completed]="stepsState?.step1Completed">
+        <router-outlet class="router-outlet"
+                       *ngIf="stepsState?.currentStep === 1"></router-outlet>
+    </mat-step>
+    <mat-step [completed]="stepsState?.step2Completed">
+        <router-outlet class="router-outlet"
+                       *ngIf="stepsState?.currentStep === 2"></router-outlet>
+    </mat-step>
+    <mat-step [completed]="stepsState?.step3Completed">
+        <router-outlet class="router-outlet"
+                       *ngIf="stepsState?.currentStep === 3"></router-outlet>
+    </mat-step>
+    <mat-step [completed]="stepsState?.step4Completed">
+        <router-outlet class="router-outlet"
+                       *ngIf="stepsState?.currentStep === 4"></router-outlet>
+    </mat-step>
 
     <!--  <mat-step *ngFor="let step of steps; let i = index" [label]="step.title">-->
     <!--    <div *ngIf="loadingStep">-->
@@ -15,8 +27,7 @@
     <!--  </mat-step>-->
 </mat-horizontal-stepper>
 
-
-<app-friends></app-friends>
+<!--<router-outlet></router-outlet>-->
 
 <button mat-mini-fab color="primary" class="float" (click)="next(stepper)"
         [disabled]="!stepsState?.currentStepValid">

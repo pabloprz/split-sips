@@ -15,6 +15,8 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {
     CircleInitialsComponent
 } from './friends/circle-initials/circle-initials.component';
+import {AppRoutingModule} from './app-routing.module';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import {
         FormsModule,
         BrowserAnimationsModule,
         NgbModule,
-        MatStepperModule
+        MatStepperModule,
+        AppRoutingModule,
+        RouterModule
     ],
     providers: [],
     bootstrap: [AppComponent]

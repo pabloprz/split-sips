@@ -23,24 +23,23 @@ export class StateService {
 
     stepState$: Observable<StepState> = this.stepState.asObservable();
 
-    state: State;
-    steps: StepState;
+    state: State = {};
+    steps: StepState = {
+        currentStep: 1,
+        currentStepValid: false,
+        step1Completed: false,
+        step2Completed: false,
+        step3Completed: false,
+        step4Completed: false
+    };
 
     constructor() {
-        this.state = {};
-
-        this.steps = {
-            currentStep: 1,
-            currentStepValid: false,
-            step1Completed: false,
-            step2Completed: false,
-            step3Completed: false,
-            step4Completed: false
-        };
     }
 
     initialize() {
+        this.state = {};
         this.stepState$.subscribe(steps => this.steps = steps);
+        this.stepState.next({...this.steps});
     }
 
     validateStep() {
@@ -63,6 +62,10 @@ export class StateService {
                 step4Completed: current >= 4
             });
         }
+    }
+
+    moveTo(step: number) {
+        this.stepState.next({...this.steps, currentStep: step});
     }
 
 }

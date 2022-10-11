@@ -1,7 +1,23 @@
-.float{
+.float {
     position: fixed;
     width: 60px;
     height: 60px;
     bottom: 25px;
     right: 40px;
+}
+
+mat-horizontal-stepper {
+    height: 100%;
+}
+
+:host::ng-deep.mat-horizontal-stepper-wrapper {
+    height: 100%;
+}
+
+:host::ng-deep.mat-horizontal-content-container {
+    height: 100%;
+}
+
+:host::ng-deep.mat-horizontal-stepper-content {
+    height: 100%;
 }

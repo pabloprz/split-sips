@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-total-bill',
@@ -11,7 +12,8 @@ export class TotalBillComponent implements OnInit {
     total?: number;
 
     constructor(
-        private stateService: StateService
+        private stateService: StateService,
+        private router: Router
     ) {
     }
 
@@ -20,7 +22,9 @@ export class TotalBillComponent implements OnInit {
 
     onNext() {
         this.stateService.state.total = this.total;
-        this.stateService.jumpStep();
+        this.router.navigate(['/step2']).then(() => {
+            console.log('Navigation successful')
+        });
     }
 
     totalChanged() {
@@ -28,6 +32,12 @@ export class TotalBillComponent implements OnInit {
             this.stateService.validateStep();
         } else {
             this.stateService.invalidateStep();
+        }
+    }
+
+    hey() {
+        if (this.total != null) {
+            this.onNext();
         }
     }
 }
