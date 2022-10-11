@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
 import {Friend} from "../util/friend";
 import {StepRoutingService} from "../util/step-routing.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-friends',
@@ -12,6 +13,7 @@ export class FriendsComponent implements OnInit {
 
     total?: number;
     friends: Friend[] = [];
+    subs: Subscription = new Subscription();
 
     constructor(
         private stateService: StateService,
@@ -21,8 +23,15 @@ export class FriendsComponent implements OnInit {
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
-        this.stepRoutingService.nextAction$.subscribe(() =>
-            this.stateService.state.friends?.push(...this.friends));
+        this.subs.add(
+            this.stepRoutingService.nextAction$
+                .subscribe(() => {
+                    this.friends.forEach(f => {
+                        console.log(f, this.stateService.state.friends)
+                        this.stateService.state.friends?.push(f)
+                    });
+                })
+        );
     }
 
     addFriend() {

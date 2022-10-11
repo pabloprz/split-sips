@@ -25,7 +25,7 @@ export class StateService {
 
     stepState$: Observable<StepState> = this.stepState.asObservable();
 
-    state: State = {friends: []};
+    state!: State;
     steps: StepState = {
         currentStep: 1,
         currentStepValid: false,
@@ -39,7 +39,7 @@ export class StateService {
     }
 
     initialize() {
-        this.state = {};
+        this.state = {friends: []};
         this.stepState$.subscribe(steps => this.steps = steps);
         this.stepState.next({...this.steps});
     }

@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
 import {StepRoutingService} from "../util/step-routing.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-total-bill',
     templateUrl: './total-bill.component.html',
     styleUrls: ['./total-bill.component.css']
 })
-export class TotalBillComponent implements OnInit {
+export class TotalBillComponent implements OnInit, OnDestroy {
 
     total?: number;
+    subs: Subscription = new Subscription();
 
     constructor(
         private stateService: StateService,
@@ -18,7 +20,7 @@ export class TotalBillComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.stepRoutingService.nextAction$.subscribe(() => this.updateState());
+        this.subs.add(this.stepRoutingService.nextAction$.subscribe(() => this.updateState()));
     }
 
     onNext() {
@@ -41,5 +43,9 @@ export class TotalBillComponent implements OnInit {
 
     updateState() {
         this.stateService.state.total = this.total;
+    }
+
+    ngOnDestroy() {
+        this.subs.unsubscribe();
     }
 }
