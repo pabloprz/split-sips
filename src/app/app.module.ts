@@ -21,6 +21,9 @@ import {
     TitleWithAddComponent
 } from './util/title-with-add/title-with-add.component';
 import {ExpensesComponent} from './expenses/expenses.component';
+import {
+    FriendSelectorComponent
+} from './util/friend-selector/friend-selector.component';
 
 @NgModule({
     declarations: [
@@ -29,7 +32,8 @@ import {ExpensesComponent} from './expenses/expenses.component';
         TotalBillComponent,
         CircleInitialsComponent,
         TitleWithAddComponent,
-        ExpensesComponent
+        ExpensesComponent,
+        FriendSelectorComponent
     ],
     imports: [
         BrowserModule,

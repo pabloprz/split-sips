@@ -27,6 +27,14 @@ export class FriendsComponent implements OnInit {
             this.stepRoutingService.nextAction$
                 .subscribe(() => this.stateService.state.friends?.push(...this.friends))
         );
+        this.friends.push(...[
+            {id: 1, name: "Aaaa", spent: 0},
+            {id: 2, name: "Bbbb", spent: 0},
+            {id: 3, name: "Cccc", spent: 0},
+            {id: 4, name: "Dddd", spent: 0},
+            {id: 5, name: "Eeee", spent: 0},
+            {id: 6, name: "Ffff", spent: 0}
+        ]);
     }
 
     addFriend() {

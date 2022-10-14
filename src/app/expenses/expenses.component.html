@@ -29,5 +29,12 @@
             <mat-icon fontIcon="delete" color="warn"
                       (click)="removeExpense(exp)"></mat-icon>
         </div>
+
+        <div class="col-12">
+            <app-friend-selector
+                (selectionChanged)="exp.nSelected = $event; checkExpensesValid()"
+                [friends]="exp.friends"></app-friend-selector>
+        </div>
+
     </div>
 </div>

@@ -3,3 +3,7 @@ export interface Friend {
     name: string;
     spent: number;
 }
+
+export interface SelectedFriend extends Friend {
+    selected: boolean;
+}

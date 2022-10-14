@@ -13,3 +13,11 @@
     height: 40px;
     width: 40px;
 }
+
+.selected {
+    background-color: red;
+}
+
+.selectable {
+    cursor: pointer;
+}

@@ -17,7 +17,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     expenses: Expense[] = [];
 
     constructor(
-        private stateService: StateService,
+        public stateService: StateService,
         private stepRoutingService: StepRoutingService
     ) {
     }
@@ -35,7 +35,11 @@ export class ExpensesComponent implements OnInit, OnDestroy {
         this.expenses.push({
             id: this.expenses.length,
             concept: '',
-            friends: []
+            friends: this.stateService.state.friends?.map(f => ({
+                ...f,
+                selected: false
+            })) || [],
+            nSelected: 0
         });
     }
 
@@ -50,7 +54,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     checkExpensesValid() {
         if (this.expenses.length > 0
             && this.subtotal === this.stateService.state.total
-            && this.expenses.every(e => e.concept.trim().length > 0 && e.amount != null && e.amount > 0)) {
+            && this.expenses.every(e => e.concept.trim().length > 0 && e.amount != null && e.amount > 0 && e.nSelected > 0)) {
             this.stateService.validateStep();
             return;
         }

@@ -1,0 +1,14 @@
+.selectors-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    white-space: nowrap;
+    margin: 0 5px;
+}
+
+.initials-wrapper {
+    min-width: 50px;
+    display: inline-block;
+    padding: 0 5px;
+    white-space: normal;
+}
