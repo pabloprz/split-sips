@@ -24,6 +24,7 @@ import {ExpensesComponent} from './expenses/expenses.component';
 import {
     FriendSelectorComponent
 } from './util/friend-selector/friend-selector.component';
+import {ResultsComponent} from './results/results.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import {
         CircleInitialsComponent,
         TitleWithAddComponent,
         ExpensesComponent,
-        FriendSelectorComponent
+        FriendSelectorComponent,
+        ResultsComponent
     ],
     imports: [
         BrowserModule,

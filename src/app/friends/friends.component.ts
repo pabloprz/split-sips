@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {StateService} from "../util/state.service";
 import {Friend} from "../util/friend";
 import {StepRoutingService} from "../util/step-routing.service";
@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.css']
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent implements OnInit, OnDestroy {
 
     total?: number;
     friends: Friend[] = [];
@@ -62,5 +62,9 @@ export class FriendsComponent implements OnInit {
         }
 
         this.stateService.invalidateStep();
+    }
+
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
     }
 }

@@ -53,7 +53,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
 
     checkExpensesValid() {
         if (this.expenses.length > 0
-            && this.subtotal === this.stateService.state.total
+            && this.subtotal <= (this.stateService.state.total || 0)
             && this.expenses.every(e => e.concept.trim().length > 0 && e.amount != null && e.amount > 0 && e.nSelected > 0)) {
             this.stateService.validateStep();
             return;
