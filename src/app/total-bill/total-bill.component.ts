@@ -33,6 +33,7 @@ export class TotalBillComponent implements OnInit, OnDestroy {
         } else {
             this.stateService.invalidateStep();
         }
+        this.stateService.state.needsCalculation = true;
     }
 
     enterPressed() {

@@ -67,6 +67,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             return acc + (exp.amount || 0)
         }, 0)
         this.checkExpensesValid();
+        this.stateService.state.needsCalculation = true;
     }
 
     ngOnDestroy() {

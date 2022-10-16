@@ -7,6 +7,7 @@ export interface State {
     total?: number;
     friends?: Friend[];
     expenses: Expense[];
+    needsCalculation: boolean;
 }
 
 export interface StepState {
@@ -41,7 +42,7 @@ export class StateService {
     }
 
     initialize() {
-        this.state = {friends: [], expenses: []};
+        this.state = {friends: [], expenses: [], needsCalculation: true};
         this.stepState$.subscribe(steps => this.steps = steps);
         this.stepState.next({...this.steps});
     }

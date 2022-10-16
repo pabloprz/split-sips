@@ -22,7 +22,10 @@ export class ResultsComponent implements OnInit {
     ngOnInit(): void {
         this.state = this.stateService.state;
         this.state.friends?.forEach(f => this.friends[f.id] = f);
-        this.performCalculations();
+        if (this.state.needsCalculation) {
+            this.performCalculations();
+            this.state.needsCalculation = false;
+        }
     }
 
     performCalculations() {
