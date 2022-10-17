@@ -25,6 +25,15 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.stateService.invalidateStep();
         this.expenses = this.stateService.state.expenses;
+
+        // TODO improve this
+        this.stateService.state.friends.forEach(f => {
+            this.expenses.forEach(e => {
+                if (!e.friends.some(fr => fr.id === f.id)) {
+                    e.friends.push({...f, selected: false});
+                }
+            });
+        });
         this.checkExpensesValid();
     }
 

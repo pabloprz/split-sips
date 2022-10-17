@@ -22,6 +22,7 @@ export class TotalBillComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subs.add(this.stepRoutingService.nextAction$.subscribe(() => this.updateState()));
         this.total = this.stateService.state.total;
+        this.checkTotalValid();
     }
 
     onNext() {
@@ -29,12 +30,16 @@ export class TotalBillComponent implements OnInit, OnDestroy {
     }
 
     totalChanged() {
+        this.checkTotalValid();
+        this.stateService.state.needsCalculation = true;
+    }
+
+    checkTotalValid() {
         if (this.total != null) {
             this.stateService.validateStep();
         } else {
             this.stateService.invalidateStep();
         }
-        this.stateService.state.needsCalculation = true;
     }
 
     enterPressed() {

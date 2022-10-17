@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StateService, StepState} from "./util/state.service";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {MatStepper} from "@angular/material/stepper";
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {filter, first} from "rxjs";
 import {StepRoutingService} from "./util/step-routing.service";
 
@@ -31,6 +31,22 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.stateService.initialize();
         this.stateService.invalidateStep();
         this.checkLandingRoute();
+        this.router.events
+            .subscribe(ev => {
+
+                if (ev instanceof NavigationStart) {
+                    if (ev.navigationTrigger === 'popstate') {
+                        // Check which direction we are navigating, back or forward
+                        if (ev.url != null && this.extractNums(ev.url) < this.stateService.steps.currentStep) {
+                            this.stateService.previous();
+                            this.stepper.previous();
+                        } else {
+                            // TODO :(
+                            console.log('forward');
+                        }
+                    }
+                }
+            });
     }
 
     ngAfterViewInit(): void {
@@ -64,5 +80,9 @@ export class AppComponent implements OnInit, AfterViewInit {
                 }
             }
         });
+    }
+
+    extractNums(url: string): number {
+        return +url.replace(/^\D+/g, '');
     }
 }

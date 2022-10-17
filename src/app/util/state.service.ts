@@ -69,8 +69,20 @@ export class StateService {
         }
     }
 
+    previous() {
+        const current = this.steps.currentStep - 1;
+        this.stepState.next({
+            currentStep: current,
+            currentStepValid: true,
+            step1Completed: current >= 1,
+            step2Completed: current >= 2,
+            step3Completed: current >= 3,
+            step4Completed: current >= 4
+        });
+
+    }
+
     moveTo(step: number) {
         this.stepState.next({...this.steps, currentStep: step});
     }
-
 }

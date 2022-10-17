@@ -24,9 +24,12 @@ export class StepRoutingService {
     next() {
         this.stateService.jumpStep();
         this.nextAction.next();
-        this.stepper.next();
         setTimeout(() => {
             this.stepper.next()
         }, 100);
+    }
+
+    previous() {
+        this.stateService.previous();
     }
 }
