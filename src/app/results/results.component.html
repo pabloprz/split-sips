@@ -8,7 +8,18 @@
 </div>
 
 <div class="results-container">
-    <div class="friend-result" *ngFor="let friend of state.friends">
-        {{friend.name}} - {{friend.spent}}
+    <div class="friend-result d-flex flex-row align-items-center"
+         *ngFor="let friend of state.friends">
+        <div class="col-2 text-center">
+            <app-circle-initials [name]="friend.name"></app-circle-initials>
+        </div>
+        <div class="col-8 d-flex flex-row">
+            <div class="result-name">{{friend.name}}</div>
+            -
+            <div class="result-value">{{friend.spent | currency}}</div>
+        </div>
+        <div class="col-2">
+            <mat-icon fontIcon="arrow_drop_down" color="primary"></mat-icon>
+        </div>
     </div>
 </div>

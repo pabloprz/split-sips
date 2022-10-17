@@ -21,6 +21,7 @@ export class TotalBillComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subs.add(this.stepRoutingService.nextAction$.subscribe(() => this.updateState()));
+        this.total = this.stateService.state.total;
     }
 
     onNext() {

@@ -35,6 +35,8 @@ export class ResultsComponent implements OnInit {
         const over = (this.state.total || 0) - sum;
         const overPct = over / sum;
 
+        this.state.friends.forEach(f => f.spent = 0);
+
         this.state.expenses.forEach(exp => {
             const eachPerson = (exp.amount || 0) / exp.nSelected;
             exp.friends.filter(f => f.selected).forEach(f =>

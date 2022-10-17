@@ -5,7 +5,7 @@ import {Expense} from "./expense";
 
 export interface State {
     total?: number;
-    friends?: Friend[];
+    friends: Friend[];
     expenses: Expense[];
     needsCalculation: boolean;
 }

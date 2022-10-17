@@ -24,11 +24,8 @@ export class ExpensesComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
-        this.subs.add(
-            this.stepRoutingService.nextAction$
-                .subscribe(() =>
-                    this.stateService.state.expenses?.push(...this.expenses))
-        );
+        this.expenses = this.stateService.state.expenses;
+        this.checkExpensesValid();
     }
 
     newExpense() {

@@ -23,10 +23,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
-        this.subs.add(
-            this.stepRoutingService.nextAction$
-                .subscribe(() => this.stateService.state.friends?.push(...this.friends))
-        );
+        this.friends = this.stateService.state.friends;
+        this.checkFriendsValid();
         // this.friends.push(...[
         //     {id: 1, name: "Aaaa", spent: 0},
         //     {id: 2, name: "Bbbb", spent: 0},
