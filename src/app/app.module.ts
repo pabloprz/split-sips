@@ -25,6 +25,8 @@ import {
     FriendSelectorComponent
 } from './util/friend-selector/friend-selector.component';
 import {ResultsComponent} from './results/results.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -48,7 +50,13 @@ import {ResultsComponent} from './results/results.component';
         NgbModule,
         MatStepperModule,
         AppRoutingModule,
-        RouterModule
+        RouterModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]
