@@ -1,5 +1,5 @@
 .expenses-container {
-    height: calc(100% - 64px);
+    height: calc(100% - 140px);
     overflow-y: auto;
     overflow-x: hidden;
 }

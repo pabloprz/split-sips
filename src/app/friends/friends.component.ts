@@ -1,42 +1,54 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    ViewChildren
+} from '@angular/core';
 import {StateService} from "../util/state.service";
 import {Friend} from "../util/friend";
-import {StepRoutingService} from "../util/step-routing.service";
 import {Subscription} from "rxjs";
+import {colors} from "../util/colors";
 
 @Component({
     selector: 'app-friends',
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.css']
 })
-export class FriendsComponent implements OnInit, OnDestroy {
+export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    @ViewChildren('friendInput') friendInputs!: QueryList<ElementRef>;
 
     total?: number;
     friends: Friend[] = [];
     subs: Subscription = new Subscription();
 
-    constructor(
-        private stateService: StateService,
-        private stepRoutingService: StepRoutingService
-    ) {
+    constructor(private stateService: StateService) {
     }
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
         this.friends = this.stateService.state.friends;
         this.checkFriendsValid();
-        // this.friends.push(...[
-        //     {id: 1, name: "Aaaa", spent: 0},
-        //     {id: 2, name: "Bbbb", spent: 0},
-        //     {id: 3, name: "Cccc", spent: 0},
-        //     {id: 4, name: "Dddd", spent: 0},
-        //     {id: 5, name: "Eeee", spent: 0},
-        //     {id: 6, name: "Ffff", spent: 0}
-        // ]);
+    }
+
+    ngAfterViewInit() {
+        this.subs.add(
+            this.friendInputs.changes.pipe().subscribe(() => {
+                if (this.friendInputs.length) {
+                    this.friendInputs.last.nativeElement.focus();
+                }
+            })
+        )
     }
 
     addFriend() {
-        this.friends.push({id: this.friends.length, name: '', spent: 0});
+        this.friends.push({
+            id: this.friends.length, name: '', spent: 0,
+            color: colors[colors.length - this.friends.length - 1]
+        });
         this.stateService.invalidateStep();
     }
 

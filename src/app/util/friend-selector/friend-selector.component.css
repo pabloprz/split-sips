@@ -9,6 +9,6 @@
 .initials-wrapper {
     min-width: 50px;
     display: inline-block;
-    padding: 0 5px;
+    margin: 0 2px;
     white-space: normal;
 }

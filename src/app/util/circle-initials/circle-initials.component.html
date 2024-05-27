@@ -1,3 +1,8 @@
-<div class="circle" [class.selected]="selected" [class.selectable]="selectable">
-    <p class="circle-inner">{{initials}}</p>
+<div class="outer-circle"
+     [style.background-color]="selected ? color || 'magenta' : 'white'"
+     [style.border-color]="color || 'magenta'"
+     [class.selected]="selected"
+     [class.selectable]="selectable">
+    <p class="circle-inner"
+       [style.color]="selected ? 'white' : 'black'">{{initials}}</p>
 </div>

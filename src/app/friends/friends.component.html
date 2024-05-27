@@ -5,13 +5,16 @@
     <div class="row align-items-center justify-content-center"
          *ngFor="let friend of friends">
         <div class="col-2 text-center">
-            <app-circle-initials [name]="friend.name"></app-circle-initials>
+            <app-circle-initials [color]="friend.color"
+                                 [name]="friend.name"></app-circle-initials>
         </div>
         <div class="col-8 friend-container">
             <mat-form-field appearance="fill" class="w-100">
                 <mat-label>Name</mat-label>
-                <input type="text" matInput [(ngModel)]="friend.name"
+                <input #friendInput type="text" matInput
+                       [(ngModel)]="friend.name"
                        (ngModelChange)="friendChanged()"
+                       (keyup.enter)="addFriend()"
                        autocomplete="off">
             </mat-form-field>
         </div>

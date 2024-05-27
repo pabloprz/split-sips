@@ -1,25 +1,31 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    ViewChildren
+} from '@angular/core';
 import {StateService} from "../util/state.service";
 import {Subscription} from "rxjs";
 import {Expense} from "../util/expense";
-import {StepRoutingService} from "../util/step-routing.service";
 
 @Component({
     selector: 'app-expenses',
     templateUrl: './expenses.component.html',
     styleUrls: ['./expenses.component.css']
 })
-export class ExpensesComponent implements OnInit, OnDestroy {
+export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    @ViewChildren('amountInput') amounts!: QueryList<ElementRef>;
 
     subs: Subscription = new Subscription();
 
     subtotal: number = 0;
     expenses: Expense[] = [];
 
-    constructor(
-        public stateService: StateService,
-        private stepRoutingService: StepRoutingService
-    ) {
+    constructor(public stateService: StateService) {
     }
 
     ngOnInit(): void {
@@ -35,6 +41,17 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             });
         });
         this.checkExpensesValid();
+        this.calculateSubtotal()
+    }
+
+    ngAfterViewInit() {
+        this.subs.add(
+            this.amounts.changes.pipe().subscribe(() => {
+                if (this.amounts.length) {
+                    this.amounts.last.nativeElement.focus();
+                }
+            })
+        );
     }
 
     newExpense() {
@@ -69,11 +86,15 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     }
 
     expenseChanged() {
+        this.calculateSubtotal()
+        this.checkExpensesValid();
+        this.stateService.state.needsCalculation = true;
+    }
+
+    calculateSubtotal() {
         this.subtotal = this.expenses.reduce((acc, exp) => {
             return acc + (exp.amount || 0)
         }, 0)
-        this.checkExpensesValid();
-        this.stateService.state.needsCalculation = true;
     }
 
     ngOnDestroy() {

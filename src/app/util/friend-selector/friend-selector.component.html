@@ -1,6 +1,7 @@
 <div class="selectors-container">
     <div *ngFor="let f of friends" class="initials-wrapper">
         <app-circle-initials (click)="f.selected = !f.selected; friendClicked()"
+                             [color]="f.color"
                              [selected]="f.selected" [selectable]="true"
                              [name]="f.name"></app-circle-initials>
     </div>
