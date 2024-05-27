@@ -11,7 +11,8 @@
     <div class="friend-result d-flex flex-row align-items-center"
          *ngFor="let friend of state.friends">
         <div class="col-2 text-center">
-            <app-circle-initials [name]="friend.name"></app-circle-initials>
+            <app-circle-initials [color]="friend.color"
+                                 [name]="friend.name"></app-circle-initials>
         </div>
         <div class="col-8 d-flex flex-row">
             <div class="result-name">{{friend.name}}</div>

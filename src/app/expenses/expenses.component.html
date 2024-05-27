@@ -8,19 +8,22 @@
 <div class="expenses-container">
     <div class="row align-items-center justify-content-center"
          *ngFor="let exp of expenses">
+        <div class="col-5 friend-container">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Amount</mat-label>
+                <input #amountInput type="number" matInput
+                       [(ngModel)]="exp.amount"
+                       (ngModelChange)="expenseChanged()"
+                       (keyup.enter)="newExpense()"
+                       autocomplete="off">
+            </mat-form-field>
+        </div>
         <div class="col-5">
             <mat-form-field appearance="fill" class="w-100">
                 <mat-label>Concept</mat-label>
                 <input type="text" matInput [(ngModel)]="exp.concept"
                        (ngModelChange)="expenseChanged()"
-                       autocomplete="off">
-            </mat-form-field>
-        </div>
-        <div class="col-5 friend-container">
-            <mat-form-field appearance="fill" class="w-100">
-                <mat-label>Amount</mat-label>
-                <input type="number" matInput [(ngModel)]="exp.amount"
-                       (ngModelChange)="expenseChanged()"
+                       (keyup.enter)="newExpense()"
                        autocomplete="off">
             </mat-form-field>
         </div>

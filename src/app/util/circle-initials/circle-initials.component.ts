@@ -8,6 +8,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 export class CircleInitialsComponent implements OnChanges {
 
     @Input() name?: string;
+    @Input() color?: string;
     @Input() selected?: boolean;
     @Input() selectable?: boolean;
     initials = "";
