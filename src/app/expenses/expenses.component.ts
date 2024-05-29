@@ -32,7 +32,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         this.stateService.invalidateStep();
         this.expenses = this.stateService.state.expenses;
 
-        // TODO improve this
+        // TODO improve this and check for deleted ones
         this.stateService.state.friends.forEach(f => {
             this.expenses.forEach(e => {
                 if (!e.friends.some(fr => fr.id === f.id)) {
