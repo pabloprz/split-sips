@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     ElementRef,
     OnDestroy,
@@ -17,7 +16,7 @@ import {colors} from "../util/colors";
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.css']
 })
-export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FriendsComponent implements OnInit, OnDestroy {
 
     @ViewChildren('friendInput') friendInputs!: QueryList<ElementRef>;
 
@@ -34,22 +33,13 @@ export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.checkFriendsValid();
     }
 
-    ngAfterViewInit() {
-        this.subs.add(
-            this.friendInputs.changes.pipe().subscribe(() => {
-                if (this.friendInputs.length) {
-                    this.friendInputs.last.nativeElement.focus();
-                }
-            })
-        )
-    }
-
     addFriend() {
         this.friends.push({
             id: this.friends.length, name: '', spent: 0,
             color: colors[colors.length - this.friends.length - 1]
         });
         this.stateService.invalidateStep();
+        setTimeout(() => this.friendInputs.last.nativeElement.focus(), 0);
     }
 
     removeFriend(friend: Friend) {

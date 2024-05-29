@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     ElementRef,
     OnDestroy,
@@ -16,7 +15,7 @@ import {Expense} from "../util/expense";
     templateUrl: './expenses.component.html',
     styleUrls: ['./expenses.component.css']
 })
-export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ExpensesComponent implements OnInit, OnDestroy {
 
     @ViewChildren('amountInput') amounts!: QueryList<ElementRef>;
 
@@ -44,16 +43,6 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         this.calculateSubtotal()
     }
 
-    ngAfterViewInit() {
-        this.subs.add(
-            this.amounts.changes.pipe().subscribe(() => {
-                if (this.amounts.length) {
-                    this.amounts.last.nativeElement.focus();
-                }
-            })
-        );
-    }
-
     newExpense() {
         this.expenses.push({
             id: this.expenses.length,
@@ -64,6 +53,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
             })) || [],
             nSelected: 0
         });
+
+        setTimeout(() => this.amounts.last.nativeElement.focus(), 0);
     }
 
     removeExpense(expense: Expense) {
