@@ -45,8 +45,6 @@ export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     addFriend() {
-        console.log("Adding");
-        console.log(this.friends);
         this.friends.push({
             id: this.friends.length, name: '', spent: 0,
             color: colors[colors.length - this.friends.length - 1]
