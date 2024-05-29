@@ -22,7 +22,6 @@
     "@angular/platform-browser-dynamic": "17.3.10",
     "@angular/router": "17.3.10",
     "@angular/service-worker": "17.3.10",
-    "@ng-bootstrap/ng-bootstrap": "16.0.0",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "rxjs": "~7.5.0",

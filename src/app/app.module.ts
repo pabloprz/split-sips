@@ -9,7 +9,6 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {TotalBillComponent} from './total-bill/total-bill.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {
@@ -47,7 +46,6 @@ import {environment} from '../environments/environment';
         MatInputModule,
         FormsModule,
         BrowserAnimationsModule,
-        NgbModule,
         MatStepperModule,
         AppRoutingModule,
         RouterModule,
