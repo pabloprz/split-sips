@@ -8,3 +8,5 @@ export interface Friend {
 export interface SelectedFriend extends Friend {
     selected: boolean;
 }
+
+export const friendsLocalStorage = 'friendsList';

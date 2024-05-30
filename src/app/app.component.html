@@ -21,6 +21,7 @@
 <!--<router-outlet></router-outlet>-->
 
 <button mat-mini-fab color="primary" class="float" (click)="next()"
-        [disabled]="!stepsState?.currentStepValid">
+        [disabled]="!stepsState?.currentStepValid"
+        *ngIf="!stepsState || stepsState.currentStep !== 4">
     <mat-icon fontIcon="arrow_forward"></mat-icon>
 </button>

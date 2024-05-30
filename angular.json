@@ -11,27 +11,30 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/split-sips",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-              "assets": [
-                  "src/favicon.ico",
-                  "src/assets",
-                  "src/manifest.webmanifest"
-              ],
-              "styles": [
-                  "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                  "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-                  "src/styles.css"
-              ],
-              "scripts": [],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
-          },
+            "builder": "@angular-devkit/build-angular:application",
+            "options": {
+                "outputPath": {
+                    "base": "dist/split-sips"
+                },
+                "index": "src/index.html",
+                "polyfills": [
+                    "src/polyfills.ts"
+                ],
+                "tsConfig": "tsconfig.app.json",
+                "assets": [
+                    "src/favicon.ico",
+                    "src/assets",
+                    "src/manifest.webmanifest"
+                ],
+                "styles": [
+                    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                    "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                    "src/styles.css"
+                ],
+                "scripts": [],
+                "serviceWorker": "ngsw-config.json",
+                "browser": "src/main.ts"
+            },
           "configurations": {
             "production": {
               "budgets": [
@@ -55,9 +58,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -69,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "split-sips:build:production"
+              "buildTarget": "split-sips:build:production"
             },
             "development": {
-              "browserTarget": "split-sips:build:development"
+              "buildTarget": "split-sips:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "split-sips:build"
+            "buildTarget": "split-sips:build"
           }
         },
         "test": {

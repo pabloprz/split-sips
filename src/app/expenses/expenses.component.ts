@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     ElementRef,
     OnDestroy,
@@ -10,13 +9,14 @@ import {
 import {StateService} from "../util/state.service";
 import {Subscription} from "rxjs";
 import {Expense} from "../util/expense";
+import {SelectedFriend} from "../util/friend";
 
 @Component({
     selector: 'app-expenses',
     templateUrl: './expenses.component.html',
     styleUrls: ['./expenses.component.css']
 })
-export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ExpensesComponent implements OnInit, OnDestroy {
 
     @ViewChildren('amountInput') amounts!: QueryList<ElementRef>;
 
@@ -32,26 +32,29 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         this.stateService.invalidateStep();
         this.expenses = this.stateService.state.expenses;
 
-        // TODO improve this
-        this.stateService.state.friends.forEach(f => {
-            this.expenses.forEach(e => {
-                if (!e.friends.some(fr => fr.id === f.id)) {
-                    e.friends.push({...f, selected: false});
-                }
-            });
+        this.expenses.forEach(e => {
+            if (e.friends.length !== this.stateService.state.friends.length) {
+                // If friends have changed, re-set them
+                // A little too complex but the only way to keep previous associations
+                const newFriends: SelectedFriend[] = [];
+                let nSelected = 0;
+                this.stateService.state.friends.forEach(f => {
+                    const prevIndex = e.friends.findIndex(fr => fr.id === f.id);
+                    if (prevIndex < 0) {
+                        newFriends.push({...f, selected: false});
+                    } else {
+                        newFriends.push(e.friends[prevIndex]);
+                        if (e.friends[prevIndex].selected) {
+                            nSelected++;
+                        }
+                    }
+                });
+                e.friends = newFriends;
+                e.nSelected = nSelected;
+            }
         });
         this.checkExpensesValid();
         this.calculateSubtotal()
-    }
-
-    ngAfterViewInit() {
-        this.subs.add(
-            this.amounts.changes.pipe().subscribe(() => {
-                if (this.amounts.length) {
-                    this.amounts.last.nativeElement.focus();
-                }
-            })
-        );
     }
 
     newExpense() {
@@ -64,6 +67,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
             })) || [],
             nSelected: 0
         });
+
+        setTimeout(() => this.amounts.last.nativeElement.focus(), 0);
     }
 
     removeExpense(expense: Expense) {

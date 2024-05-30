@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     Component,
     ElementRef,
     OnDestroy,
@@ -8,16 +7,16 @@ import {
     ViewChildren
 } from '@angular/core';
 import {StateService} from "../util/state.service";
-import {Friend} from "../util/friend";
+import {Friend, friendsLocalStorage} from "../util/friend";
 import {Subscription} from "rxjs";
-import {colors} from "../util/colors";
+import {StepRoutingService} from "../util/step-routing.service";
 
 @Component({
     selector: 'app-friends',
     templateUrl: './friends.component.html',
     styleUrls: ['./friends.component.css']
 })
-export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FriendsComponent implements OnInit, OnDestroy {
 
     @ViewChildren('friendInput') friendInputs!: QueryList<ElementRef>;
 
@@ -25,39 +24,38 @@ export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
     friends: Friend[] = [];
     subs: Subscription = new Subscription();
 
-    constructor(private stateService: StateService) {
+    constructor(
+        private stateService: StateService,
+        private stepRoutingService: StepRoutingService
+    ) {
     }
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
         this.friends = this.stateService.state.friends;
         this.checkFriendsValid();
-    }
-
-    ngAfterViewInit() {
-        this.subs.add(
-            this.friendInputs.changes.pipe().subscribe(() => {
-                if (this.friendInputs.length) {
-                    this.friendInputs.last.nativeElement.focus();
-                }
-            })
-        )
+        // Update local storage with the updated friends when we leave this step
+        this.subs.add(this.stepRoutingService.nextAction$.subscribe(() => {
+            this.updateFriendsStorage();
+        }));
     }
 
     addFriend() {
         this.friends.push({
-            id: this.friends.length, name: '', spent: 0,
-            color: colors[colors.length - this.friends.length - 1]
+            id: Date.now(), name: '', spent: 0,
+            color: this.stateService.getNewColor()
         });
         this.stateService.invalidateStep();
+        setTimeout(() => this.friendInputs.last.nativeElement.focus(), 0);
     }
 
     removeFriend(friend: Friend) {
         const index = this.friends.findIndex(f => f.id === friend.id);
 
         if (index >= 0) {
+            this.stateService.addColorBack(friend.color);
             this.friends.splice(index, 1);
-            this.checkFriendsValid();
+            this.friendChanged();
         }
     }
 
@@ -73,6 +71,14 @@ export class FriendsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.stateService.invalidateStep();
+    }
+
+    updateFriendsStorage() {
+        // Updating the storage of friends, setting all of them to 0 spent for when they come back
+        localStorage.setItem(friendsLocalStorage, JSON.stringify(this.friends.map(f => ({
+            ...f,
+            spent: 0
+        }))));
     }
 
     ngOnDestroy(): void {
