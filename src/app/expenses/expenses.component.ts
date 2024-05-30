@@ -9,6 +9,7 @@ import {
 import {StateService} from "../util/state.service";
 import {Subscription} from "rxjs";
 import {Expense} from "../util/expense";
+import {SelectedFriend} from "../util/friend";
 
 @Component({
     selector: 'app-expenses',
@@ -31,13 +32,26 @@ export class ExpensesComponent implements OnInit, OnDestroy {
         this.stateService.invalidateStep();
         this.expenses = this.stateService.state.expenses;
 
-        // TODO improve this and check for deleted ones
-        this.stateService.state.friends.forEach(f => {
-            this.expenses.forEach(e => {
-                if (!e.friends.some(fr => fr.id === f.id)) {
-                    e.friends.push({...f, selected: false});
-                }
-            });
+        this.expenses.forEach(e => {
+            if (e.friends.length !== this.stateService.state.friends.length) {
+                // If friends have changed, re-set them
+                // A little too complex but the only way to keep previous associations
+                const newFriends: SelectedFriend[] = [];
+                let nSelected = 0;
+                this.stateService.state.friends.forEach(f => {
+                    const prevIndex = e.friends.findIndex(fr => fr.id === f.id);
+                    if (prevIndex < 0) {
+                        newFriends.push({...f, selected: false});
+                    } else {
+                        newFriends.push(e.friends[prevIndex]);
+                        if (e.friends[prevIndex].selected) {
+                            nSelected++;
+                        }
+                    }
+                });
+                e.friends = newFriends;
+                e.nSelected = nSelected;
+            }
         });
         this.checkExpensesValid();
         this.calculateSubtotal()

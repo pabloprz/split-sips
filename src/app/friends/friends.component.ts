@@ -55,7 +55,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         if (index >= 0) {
             this.stateService.addColorBack(friend.color);
             this.friends.splice(index, 1);
-            this.checkFriendsValid();
+            this.friendChanged();
         }
     }
 
