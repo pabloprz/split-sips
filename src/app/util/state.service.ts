@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from "rxjs";
-import {Friend} from "./friend";
+import {Friend, friendsLocalStorage} from "./friend";
 import {Expense} from "./expense";
+import {colorCodes} from "./colors";
 
 export interface State {
     total?: number;
@@ -38,6 +39,8 @@ export class StateService {
         step4Completed: false
     };
 
+    private colors: string[] = [];
+
     constructor() {
     }
 
@@ -45,6 +48,8 @@ export class StateService {
         this.state = {friends: [], expenses: [], needsCalculation: true};
         this.stepState$.subscribe(steps => this.steps = steps);
         this.stepState.next({...this.steps});
+        this.initializeColors();
+        this.fetchFriendsFromStorage();
     }
 
     validateStep() {
@@ -85,4 +90,38 @@ export class StateService {
     moveTo(step: number) {
         this.stepState.next({...this.steps, currentStep: step});
     }
+
+    fetchFriendsFromStorage() {
+        let storage = localStorage.getItem(friendsLocalStorage);
+        if (storage == null) {
+            return;
+        }
+        let fetchedFriends = JSON.parse(storage);
+        if (fetchedFriends != null && fetchedFriends.length > 0) {
+            this.state.friends = fetchedFriends;
+        }
+
+        // Syncing the colors to avoid repeated values
+        this.state.friends.forEach(f => {
+            const i = this.colors.indexOf(f.color);
+            if (i >= 0) {
+                this.colors.splice(i, 1);
+            }
+        });
+    }
+
+    private initializeColors() {
+        for (const color of colorCodes) {
+            this.colors.push(color);
+        }
+    }
+
+    getNewColor(): string {
+        return this.colors.pop() || 'Magenta';
+    }
+
+    addColorBack(color: string) {
+        this.colors.push(color);
+    }
+
 }

@@ -7,9 +7,8 @@ import {
     ViewChildren
 } from '@angular/core';
 import {StateService} from "../util/state.service";
-import {Friend} from "../util/friend";
+import {Friend, friendsLocalStorage} from "../util/friend";
 import {Subscription} from "rxjs";
-import {colors} from "../util/colors";
 import {StepRoutingService} from "../util/step-routing.service";
 
 @Component({
@@ -33,8 +32,6 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.stateService.invalidateStep();
-        // Try fetching friends from the local storage if there are none
-        this.getFriendsFromStorage();
         this.friends = this.stateService.state.friends;
         this.checkFriendsValid();
         // Update local storage with the updated friends when we leave this step
@@ -45,8 +42,8 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
     addFriend() {
         this.friends.push({
-            id: this.friends.length, name: '', spent: 0,
-            color: colors[colors.length - this.friends.length - 1]
+            id: Date.now(), name: '', spent: 0,
+            color: this.stateService.getNewColor()
         });
         this.stateService.invalidateStep();
         setTimeout(() => this.friendInputs.last.nativeElement.focus(), 0);
@@ -56,6 +53,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
         const index = this.friends.findIndex(f => f.id === friend.id);
 
         if (index >= 0) {
+            this.stateService.addColorBack(friend.color);
             this.friends.splice(index, 1);
             this.checkFriendsValid();
         }
@@ -75,24 +73,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
         this.stateService.invalidateStep();
     }
 
-    getFriendsFromStorage() {
-        // If we already have friends there is no need to re fetch them
-        if (this.stateService.state.friends.length > 0) {
-            return;
-        }
-        let storage = localStorage.getItem('friendsList');
-        if (storage == null) {
-            return;
-        }
-        let fetchedFriends = JSON.parse(storage);
-        if (fetchedFriends != null && fetchedFriends.length > 0) {
-            this.stateService.state.friends = fetchedFriends;
-        }
-    }
-
     updateFriendsStorage() {
         // Updating the storage of friends, setting all of them to 0 spent for when they come back
-        localStorage.setItem('friendsList', JSON.stringify(this.friends.map(f => ({
+        localStorage.setItem(friendsLocalStorage, JSON.stringify(this.friends.map(f => ({
             ...f,
             spent: 0
         }))));
